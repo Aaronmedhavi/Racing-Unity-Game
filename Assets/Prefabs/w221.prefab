@@ -811,8 +811,8 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.38
   m_SuspensionSpring:
-    spring: 35000
-    damper: 4500
+    spring: 90000
+    damper: 9000
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
@@ -1551,8 +1551,8 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.38
   m_SuspensionSpring:
-    spring: 35000
-    damper: 4500
+    spring: 90000
+    damper: 9000
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
@@ -5639,8 +5639,8 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.38
   m_SuspensionSpring:
-    spring: 35000
-    damper: 4500
+    spring: 90000
+    damper: 9000
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
@@ -6857,7 +6857,7 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -6876,26 +6876,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71d3d13bef99404fb0deaf68fe5bfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motorForce: 1000
-  brakeForce: 3000
-  maxSteerAngle: 30
-  downforceFactor: 50
-  antiRollStiffness: 5000
+  frontLeftWheel: {fileID: 1695098983262206521}
+  frontRightWheel: {fileID: 3959132585540719092}
+  rearLeftWheel: {fileID: 2089745415682050975}
+  rearRightWheel: {fileID: 4728021152382105350}
   frontLeftWheelCollider: {fileID: 1398238999633415954}
   frontRightWheelCollider: {fileID: 850529346560579502}
   rearLeftWheelCollider: {fileID: 4612749166744646717}
   rearRightWheelCollider: {fileID: 7096336197251114299}
-  frontLeftWheelTransform: {fileID: 1695098983262206521}
-  frontRightWheelTransform: {fileID: 3959132585540719092}
-  rearLeftWheelTransform: {fileID: 2089745415682050975}
-  rearRightWheelTransform: {fileID: 4728021152382105350}
-  gearRatios:
-  - -3
-  - 3.6
-  - 2.1
-  - 1.4
-  - 1
-  - 0.8
+  motorForce: 1000
+  maxSteerAngle: 30
+  brakeForce: 3000
+  gearThresholds:
+  - 10
+  - 25
+  - 40
+  - 60
+  - 80
+  currentDrivingMode: 0
 --- !u!1 &6104160387491930659
 GameObject:
   m_ObjectHideFlags: 0
@@ -7294,8 +7292,8 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.38
   m_SuspensionSpring:
-    spring: 35000
-    damper: 4500
+    spring: 90000
+    damper: 9000
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0

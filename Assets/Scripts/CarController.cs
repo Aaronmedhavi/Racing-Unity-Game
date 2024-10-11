@@ -1,317 +1,238 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    // Input variables
-    private float horizontalInput, verticalInput;
-    private bool isBraking;
+    public Transform frontLeftWheel;
+    public Transform frontRightWheel;
+    public Transform rearLeftWheel;
+    public Transform rearRightWheel;
 
-    // Car settings
-    [Header("Car Settings")]
-    [SerializeField] private float motorForce = 1500f;
-    [SerializeField] private float brakeForce = 3000f;
-    [SerializeField] private float maxSteerAngle = 30f;
+    public WheelCollider frontLeftWheelCollider;
+    public WheelCollider frontRightWheelCollider;
+    public WheelCollider rearLeftWheelCollider;
+    public WheelCollider rearRightWheelCollider;
 
-    // Downforce settings
-    [Header("Downforce Settings")]
-    [SerializeField] private float downforceFactor = 50f;
+    public float motorForce = 1500f;
+    public float maxSteerAngle = 30f;
+    public float brakeForce = 3000f;
 
-    // Anti-roll bar settings
-    [Header("Anti-Roll Bar Settings")]
-    [SerializeField] private float antiRollStiffness = 5000f;
+    private float currentSteerAngle;
+    private float currentAcceleration;
+    private float currentBrakeForce;
 
-    // Wheel Colliders
-    [Header("Wheel Colliders")]
-    [SerializeField] private WheelCollider frontLeftWheelCollider;
-    [SerializeField] private WheelCollider frontRightWheelCollider;
-    [SerializeField] private WheelCollider rearLeftWheelCollider;
-    [SerializeField] private WheelCollider rearRightWheelCollider;
-
-    // Wheel Transforms
-    [Header("Wheel Transforms")]
-    [SerializeField] private Transform frontLeftWheelTransform;
-    [SerializeField] private Transform frontRightWheelTransform;
-    [SerializeField] private Transform rearLeftWheelTransform;
-    [SerializeField] private Transform rearRightWheelTransform;
-
-    // Private variables
     private Rigidbody rb;
+    private bool isBraking = false;
 
-    // Initial wheel rotations
-    private Quaternion frontLeftWheelInitialRotation, frontRightWheelInitialRotation;
-    private Quaternion rearLeftWheelInitialRotation, rearRightWheelInitialRotation;
+    private int gear = 0;
+    private float currentSpeed = 0f;
+    public float[] gearThresholds = { 10f, 25f, 40f, 60f, 80f }; // Speed thresholds for automatic gear changes
 
-    // Gearbox variables
-    [Header("Gearbox Settings")]
-    [SerializeField] private float[] gearRatios = { -3.0f, 3.6f, 2.1f, 1.4f, 1.0f, 0.8f };
-    private int currentGear = 1; // Start in first forward gear
-    private float engineRPM;
-
-    // Public properties for UI access
-    public int CurrentGear
-    {
-        get { return currentGear; }
-    }
-
-    public float GetCurrentSpeed()
-    {
-        // Speed in km/h
-        return rb.velocity.magnitude * 3.6f;
-    }
+    public enum DrivingMode { Manual, Automatic }
+    public DrivingMode currentDrivingMode = DrivingMode.Manual;
 
     private void Start()
     {
-        // Get the Rigidbody component
         rb = GetComponent<Rigidbody>();
+    }
 
-        // Store the initial local rotations of the wheels
-        frontLeftWheelInitialRotation = frontLeftWheelTransform.localRotation;
-        frontRightWheelInitialRotation = frontRightWheelTransform.localRotation;
-        rearLeftWheelInitialRotation = rearLeftWheelTransform.localRotation;
-        rearRightWheelInitialRotation = rearRightWheelTransform.localRotation;
-
-        // Lower the center of mass for stability
-        rb.centerOfMass = new Vector3(0f, -0.5f, 0f);
-
-        // Setup suspension and friction
-        SetupSuspension();
-        AdjustFriction();
+    private void Update()
+    {
+        HandleInput();
     }
 
     private void FixedUpdate()
     {
-        GetInput();
         HandleMotor();
         HandleSteering();
-        ShiftGears();
-        ApplyAntiRollBars();
-        ApplyDownforce();
-        ApplyBraking();
-        UpdateWheels();
+        UpdateWheelPoses();
     }
 
-    /// <summary>
-    /// Reads the player's input.
-    /// </summary>
-    private void GetInput()
+    private void HandleInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleDrivingMode();
+        }
+
+        currentAcceleration = Input.GetAxis("Vertical");
         isBraking = Input.GetKey(KeyCode.Space);
 
-        // Debug logs
-        Debug.Log($"Input - Horizontal: {horizontalInput}, Vertical: {verticalInput}, Braking: {isBraking}");
+        if (currentDrivingMode == DrivingMode.Manual)
+        {
+            HandleManualInput();
+        }
+        else
+        {
+            HandleAutomaticInput();
+        }
     }
 
-    /// <summary>
-    /// Handles motor torque.
-    /// </summary>
+    private void HandleManualInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E)) // Shift up
+        {
+            ShiftUp();
+        }
+        else if (Input.GetKeyDown(KeyCode.Q)) // Shift down
+        {
+            ShiftDown();
+        }
+        else if (Input.GetKeyDown(KeyCode.R)) // Shift to reverse
+        {
+            ShiftToReverse();
+        }
+        else if (Input.GetKeyDown(KeyCode.N)) // Shift to neutral
+        {
+            ShiftToNeutral();
+        }
+    }
+
+    private void ShiftUp()
+    {
+        if (gear >= 0 && gear < 5)
+        {
+            gear++;
+            Debug.Log("Shifted up to gear " + gear);
+        }
+    }
+
+    private void ShiftDown()
+    {
+        if (gear > 1)
+        {
+            gear--;
+            Debug.Log("Shifted down to gear " + gear);
+        }
+    }
+
+    private void ShiftToReverse()
+    {
+        if (currentSpeed < 1f) // Only allow shifting to reverse when nearly stopped
+        {
+            gear = -1;
+            Debug.Log("Shifted to reverse");
+        }
+    }
+
+    private void ShiftToNeutral()
+    {
+        gear = 0;
+        Debug.Log("Shifted to neutral");
+    }
+
+    private void HandleAutomaticInput()
+    {
+        currentSpeed = rb.velocity.magnitude * 3.6f; // Convert to km/h
+
+        if (currentAcceleration > 0)
+        {
+            if (gear <= 0) gear = 1;
+            for (int i = 0; i < gearThresholds.Length; i++)
+            {
+                if (currentSpeed > gearThresholds[i])
+                {
+                    gear = i + 2;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        else if (currentAcceleration < 0)
+        {
+            if (currentSpeed < 1f)
+            {
+                gear = -1;
+            }
+            else if (gear > 1)
+            {
+                gear--;
+            }
+        }
+        else if (Mathf.Abs(currentAcceleration) < 0.1f && currentSpeed < 1f)
+        {
+            gear = 0;
+        }
+    }
+
+    private void ToggleDrivingMode()
+    {
+        currentDrivingMode = (currentDrivingMode == DrivingMode.Manual) ? DrivingMode.Automatic : DrivingMode.Manual;
+        Debug.Log("Switched to " + currentDrivingMode + " mode");
+    }
+
     private void HandleMotor()
     {
-        float adjustedMotorForce = motorForce;
-        if (IsWheelSlip())
+        currentBrakeForce = isBraking ? brakeForce : 0f;
+
+        float gearMultiplier = (currentDrivingMode == DrivingMode.Automatic) ? (float)gear / 5f : 1f;
+
+        if (gear != 0)
         {
-            adjustedMotorForce *= 0.5f; // Traction control
-            Debug.Log("Traction Control Activated.");
+            ApplyMotorTorque(currentAcceleration * Mathf.Abs(motorForce) * Mathf.Sign(gear) * gearMultiplier);
+        }
+        else
+        {
+            ApplyMotorTorque(0);
         }
 
-        // Apply motor torque adjusted by gear ratio
-        float torque = verticalInput * adjustedMotorForce * gearRatios[currentGear];
-        rearLeftWheelCollider.motorTorque = torque;
-        rearRightWheelCollider.motorTorque = torque;
-
-        // Debug logs
-        Debug.Log($"Motor Torque Applied: {torque}");
+        ApplyBrake();
     }
 
-    /// <summary>
-    /// Handles the steering of the front wheels.
-    /// </summary>
+    private void ApplyMotorTorque(float motorTorque)
+    {
+        frontLeftWheelCollider.motorTorque = motorTorque;
+        frontRightWheelCollider.motorTorque = motorTorque;
+    }
+
     private void HandleSteering()
     {
-        float steerAngle = maxSteerAngle * horizontalInput;
-        frontLeftWheelCollider.steerAngle = steerAngle;
-        frontRightWheelCollider.steerAngle = steerAngle;
+        currentSteerAngle = maxSteerAngle * Input.GetAxis("Horizontal");
 
-        // Debug logs
-        Debug.Log($"Steer Angle: {steerAngle}");
+        frontLeftWheelCollider.steerAngle = currentSteerAngle;
+        frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
 
-    /// <summary>
-    /// Applies braking force to all wheels.
-    /// </summary>
-    private void ApplyBraking()
+    private void ApplyBrake()
     {
-        float brakeTorque = isBraking ? brakeForce : 0f;
-        frontLeftWheelCollider.brakeTorque = brakeTorque;
-        frontRightWheelCollider.brakeTorque = brakeTorque;
-        rearLeftWheelCollider.brakeTorque = brakeTorque;
-        rearRightWheelCollider.brakeTorque = brakeTorque;
-
-        // Debug logs
-        Debug.Log($"Brake Torque Applied: {brakeTorque}");
+        if (isBraking)
+        {
+            frontLeftWheelCollider.brakeTorque = currentBrakeForce;
+            frontRightWheelCollider.brakeTorque = currentBrakeForce;
+            rearLeftWheelCollider.brakeTorque = currentBrakeForce;
+            rearRightWheelCollider.brakeTorque = currentBrakeForce;
+        }
+        else
+        {
+            frontLeftWheelCollider.brakeTorque = 0f;
+            frontRightWheelCollider.brakeTorque = 0f;
+            rearLeftWheelCollider.brakeTorque = 0f;
+            rearRightWheelCollider.brakeTorque = 0f;
+        }
     }
 
-    /// <summary>
-    /// Updates the position and rotation of each wheel.
-    /// </summary>
-    private void UpdateWheels()
+    private void UpdateWheelPoses()
     {
-        UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform, frontLeftWheelInitialRotation);
-        UpdateSingleWheel(frontRightWheelCollider, frontRightWheelTransform, frontRightWheelInitialRotation);
-        UpdateSingleWheel(rearLeftWheelCollider, rearLeftWheelTransform, rearLeftWheelInitialRotation);
-        UpdateSingleWheel(rearRightWheelCollider, rearRightWheelTransform, rearRightWheelInitialRotation);
+        UpdateWheelPose(frontLeftWheel, frontLeftWheelCollider, new Vector3(-90, 0, -90));
+        UpdateWheelPose(frontRightWheel, frontRightWheelCollider, new Vector3(90, 0, -90));
+        UpdateWheelPose(rearLeftWheel, rearLeftWheelCollider, new Vector3(-90, 0, -90));
+        UpdateWheelPose(rearRightWheel, rearRightWheelCollider, new Vector3(90, 0, -90));
     }
 
-    /// <summary>
-    /// Updates a single wheel's position and rotation.
-    /// </summary>
-    private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform, Quaternion initialRotation)
+    private void UpdateWheelPose(Transform wheelTransform, WheelCollider wheelCollider, Vector3 rotationOffset)
     {
         Vector3 pos;
-        Quaternion rot;
-        wheelCollider.GetWorldPose(out pos, out rot);
+        Quaternion quat;
+        wheelCollider.GetWorldPose(out pos, out quat);
         wheelTransform.position = pos;
-        wheelTransform.rotation = rot * initialRotation;
+        wheelTransform.rotation = quat * Quaternion.Euler(rotationOffset);
     }
 
-    /// <summary>
-    /// Sets up the suspension for all wheels.
-    /// </summary>
-    private void SetupSuspension()
+    public int GetGear()
     {
-        JointSpring suspensionSpring = new JointSpring
-        {
-            spring = 60000f,    // Higher stiffness for sportier feel
-            damper = 8000f,     // Increased damping
-            targetPosition = 0.4f // Slightly lower resting position
-        };
-
-        // Apply suspension settings to all wheels
-        frontLeftWheelCollider.suspensionSpring = suspensionSpring;
-        frontRightWheelCollider.suspensionSpring = suspensionSpring;
-        rearLeftWheelCollider.suspensionSpring = suspensionSpring;
-        rearRightWheelCollider.suspensionSpring = suspensionSpring;
-
-        // Set the suspension distance
-        frontLeftWheelCollider.suspensionDistance = 0.15f;
-        frontRightWheelCollider.suspensionDistance = 0.15f;
-        rearLeftWheelCollider.suspensionDistance = 0.15f;
-        rearRightWheelCollider.suspensionDistance = 0.15f;
-    }
-
-    /// <summary>
-    /// Adjusts the friction settings for all wheels.
-    /// </summary>
-    private void AdjustFriction()
-    {
-        WheelFrictionCurve forwardFriction = new WheelFrictionCurve
-        {
-            extremumSlip = 0.1f,
-            extremumValue = 1f,
-            asymptoteSlip = 0.5f,
-            asymptoteValue = 0.8f,
-            stiffness = 2.0f
-        };
-
-        WheelFrictionCurve sidewaysFriction = new WheelFrictionCurve
-        {
-            extremumSlip = 0.2f,
-            extremumValue = 1f,
-            asymptoteSlip = 0.5f,
-            asymptoteValue = 0.7f,
-            stiffness = 2.0f
-        };
-
-        // Apply friction settings to all wheels
-        frontLeftWheelCollider.forwardFriction = forwardFriction;
-        frontRightWheelCollider.forwardFriction = forwardFriction;
-        rearLeftWheelCollider.forwardFriction = forwardFriction;
-        rearRightWheelCollider.forwardFriction = forwardFriction;
-
-        frontLeftWheelCollider.sidewaysFriction = sidewaysFriction;
-        frontRightWheelCollider.sidewaysFriction = sidewaysFriction;
-        rearLeftWheelCollider.sidewaysFriction = sidewaysFriction;
-        rearRightWheelCollider.sidewaysFriction = sidewaysFriction;
-    }
-
-    /// <summary>
-    /// Shifts gears based on player input.
-    /// </summary>
-    private void ShiftGears()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (currentGear < gearRatios.Length - 1)
-                currentGear++;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (currentGear > 0)
-                currentGear--;
-        }
-
-        Debug.Log($"Current Gear: {currentGear}, Gear Ratio: {gearRatios[currentGear]}");
-    }
-
-    /// <summary>
-    /// Applies anti-roll bars to reduce body roll.
-    /// </summary>
-    private void ApplyAntiRollBars()
-    {
-        ApplyAntiRoll(frontLeftWheelCollider, frontRightWheelCollider);
-        ApplyAntiRoll(rearLeftWheelCollider, rearRightWheelCollider);
-    }
-
-    /// <summary>
-    /// Applies anti-roll force between two wheels.
-    /// </summary>
-    private void ApplyAntiRoll(WheelCollider wheelL, WheelCollider wheelR)
-    {
-        WheelHit hit;
-        float travelL = 1.0f;
-        float travelR = 1.0f;
-
-        bool groundedL = wheelL.GetGroundHit(out hit);
-        if (groundedL)
-            travelL = (-wheelL.transform.InverseTransformPoint(hit.point).y - wheelL.radius) / wheelL.suspensionDistance;
-
-        bool groundedR = wheelR.GetGroundHit(out hit);
-        if (groundedR)
-            travelR = (-wheelR.transform.InverseTransformPoint(hit.point).y - wheelR.radius) / wheelR.suspensionDistance;
-
-        float antiRollForce = (travelL - travelR) * antiRollStiffness;
-
-        if (groundedL)
-            rb.AddForceAtPosition(wheelL.transform.up * -antiRollForce, wheelL.transform.position);
-        if (groundedR)
-            rb.AddForceAtPosition(wheelR.transform.up * antiRollForce, wheelR.transform.position);
-
-        // Debug logs
-        Debug.Log($"Anti-Roll Force Applied: {antiRollForce}");
-    }
-
-    /// <summary>
-    /// Applies downforce based on the car's speed.
-    /// </summary>
-    private void ApplyDownforce()
-    {
-        float speed = rb.velocity.magnitude;
-        float downforce = speed * downforceFactor;
-        rb.AddForce(-transform.up * downforce);
-
-        // Debug logs
-        Debug.Log($"Downforce Applied: {downforce}");
-    }
-
-    /// <summary>
-    /// Checks if any driven wheel is slipping.
-    /// </summary>
-    private bool IsWheelSlip()
-    {
-        WheelHit rearLeftHit, rearRightHit;
-        bool slipL = rearLeftWheelCollider.GetGroundHit(out rearLeftHit) ? Mathf.Abs(rearLeftHit.forwardSlip) > 0.2f : false;
-        bool slipR = rearRightWheelCollider.GetGroundHit(out rearRightHit) ? Mathf.Abs(rearRightHit.forwardSlip) > 0.2f : false;
-        return slipL || slipR;
+        return gear;
     }
 }
