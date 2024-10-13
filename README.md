@@ -22,11 +22,11 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 
 ## Controls
 
-- Drive Forward: W
-- Reverse: S
-- Steer Left: A
-- Steer Right: D 
-- Brake: Spacebar
-- Gear Up: E
+- Drive Forward: W / R2 / RT
+- Reverse: S / L2(Hold) / LT(Hold)
+- Steer Left: A / Left Stick Left
+- Steer Right: D / Left Stick Right
+- Brake: Spacebar / L2 / LT
+- Gear Up: E / 
 - Gear Down: Q
 - Change Driving Mode: M
