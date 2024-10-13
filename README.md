@@ -27,6 +27,6 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 - Steer Left: A / Left Stick Left
 - Steer Right: D / Left Stick Right
 - Brake: Spacebar / L2 / LT
-- Gear Up: E / 
-- Gear Down: Q
-- Change Driving Mode: M
+- Gear Up: E / R1 / RB
+- Gear Down: Q / L1 / LB
+- Change Driving Mode: M / D-pad Up
