@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;  // Include Input System namespace for gamepad support
 
 public class CarController : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class CarController : MonoBehaviour
     public enum DrivingMode { Manual, Automatic }
     public DrivingMode currentDrivingMode = DrivingMode.Manual;
 
+    private Gamepad gamepad;  // Gamepad reference
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -39,6 +42,9 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
+        // Detect if a gamepad is connected
+        gamepad = Gamepad.current;
+
         HandleInput();
     }
 
@@ -51,13 +57,25 @@ public class CarController : MonoBehaviour
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        // Keyboard input
+        if (Input.GetKeyDown(KeyCode.M) || (gamepad != null && gamepad.dpad.up.wasPressedThisFrame))
         {
             ToggleDrivingMode();
         }
 
+        // Accelerate with both keyboard and gamepad
         currentAcceleration = Input.GetAxis("Vertical");
+        if (gamepad != null)
+        {
+            currentAcceleration = gamepad.rightTrigger.ReadValue(); // Use right trigger for acceleration
+        }
+
+        // Brake with both keyboard and gamepad
         isBraking = Input.GetKey(KeyCode.Space);
+        if (gamepad != null)
+        {
+            isBraking = gamepad.leftTrigger.ReadValue() > 0.1f; // Use left trigger for braking
+        }
 
         if (currentDrivingMode == DrivingMode.Manual)
         {
@@ -71,19 +89,23 @@ public class CarController : MonoBehaviour
 
     private void HandleManualInput()
     {
-        if (Input.GetKeyDown(KeyCode.E)) // Shift up
+        // Gear up with both keyboard and gamepad
+        if (Input.GetKeyDown(KeyCode.E) || (gamepad != null && gamepad.rightShoulder.wasPressedThisFrame))
         {
             ShiftUp();
         }
-        else if (Input.GetKeyDown(KeyCode.Q)) // Shift down
+        // Gear down with both keyboard and gamepad
+        else if (Input.GetKeyDown(KeyCode.Q) || (gamepad != null && gamepad.leftShoulder.wasPressedThisFrame))
         {
             ShiftDown();
         }
-        else if (Input.GetKeyDown(KeyCode.R)) // Shift to reverse
+        // Shift to reverse with keyboard only (can be mapped similarly to gamepad if desired)
+        else if (Input.GetKeyDown(KeyCode.R))
         {
             ShiftToReverse();
         }
-        else if (Input.GetKeyDown(KeyCode.N)) // Shift to neutral
+        // Shift to neutral with keyboard only (can be mapped similarly to gamepad if desired)
+        else if (Input.GetKeyDown(KeyCode.N))
         {
             ShiftToNeutral();
         }
@@ -170,9 +192,16 @@ public class CarController : MonoBehaviour
 
         float gearMultiplier = (currentDrivingMode == DrivingMode.Automatic) ? (float)gear / 5f : 1f;
 
+        // Dynamically increase motor force at low speeds in automatic mode
+        float dynamicMotorForce = motorForce;
+        if (currentDrivingMode == DrivingMode.Automatic && rb.velocity.magnitude * 3.6f < 10f) // Speed is under 10 km/h
+        {
+            dynamicMotorForce = motorForce * 2f; // Increase motor force by 50% at low speeds
+        }
+
         if (gear != 0)
         {
-            ApplyMotorTorque(currentAcceleration * Mathf.Abs(motorForce) * Mathf.Sign(gear) * gearMultiplier);
+            ApplyMotorTorque(currentAcceleration * Mathf.Abs(dynamicMotorForce) * Mathf.Sign(gear) * gearMultiplier);
         }
         else
         {
@@ -190,7 +219,12 @@ public class CarController : MonoBehaviour
 
     private void HandleSteering()
     {
+        // Steering with both keyboard and gamepad
         currentSteerAngle = maxSteerAngle * Input.GetAxis("Horizontal");
+        if (gamepad != null)
+        {
+            currentSteerAngle = maxSteerAngle * gamepad.leftStick.x.ReadValue(); // Use left stick for steering
+        }
 
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
