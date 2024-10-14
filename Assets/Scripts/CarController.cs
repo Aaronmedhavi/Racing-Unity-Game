@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;  // Include Input System namespace for gamepad support
+using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
@@ -28,21 +28,20 @@ public class CarController : MonoBehaviour
 
     private int gear = 0;
     private float currentSpeed = 0f;
-    public float[] gearThresholds = { 10f, 25f, 40f, 60f, 80f }; // Speed thresholds for automatic gear changes
+    public float[] gearThresholds = { 10f, 25f, 40f, 60f, 80f }; // Speed for automatic gear changes
 
     public enum DrivingMode { Manual, Automatic }
     public DrivingMode currentDrivingMode = DrivingMode.Manual;
 
     private Gamepad gamepad;  // Gamepad reference
 
-    private void Start()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    void Update()
     {
-        // Detect if a gamepad is connected
         gamepad = Gamepad.current;
 
         HandleInput();
@@ -57,24 +56,21 @@ public class CarController : MonoBehaviour
 
     private void HandleInput()
     {
-        // Keyboard input
         if (Input.GetKeyDown(KeyCode.M) || (gamepad != null && gamepad.dpad.up.wasPressedThisFrame))
         {
             ToggleDrivingMode();
         }
-
-        // Accelerate with both keyboard and gamepad
         currentAcceleration = Input.GetAxis("Vertical");
         if (gamepad != null)
         {
-            currentAcceleration = gamepad.rightTrigger.ReadValue(); // Use right trigger for acceleration
+            currentAcceleration = gamepad.rightTrigger.ReadValue();
         }
 
         // Brake with both keyboard and gamepad
         isBraking = Input.GetKey(KeyCode.Space);
         if (gamepad != null)
         {
-            isBraking = gamepad.leftTrigger.ReadValue() > 0.1f; // Use left trigger for braking
+            isBraking = gamepad.leftTrigger.ReadValue() > 0.1f;
         }
 
         if (currentDrivingMode == DrivingMode.Manual)
@@ -89,22 +85,18 @@ public class CarController : MonoBehaviour
 
     private void HandleManualInput()
     {
-        // Gear up with both keyboard and gamepad
         if (Input.GetKeyDown(KeyCode.E) || (gamepad != null && gamepad.rightShoulder.wasPressedThisFrame))
         {
             ShiftUp();
         }
-        // Gear down with both keyboard and gamepad
         else if (Input.GetKeyDown(KeyCode.Q) || (gamepad != null && gamepad.leftShoulder.wasPressedThisFrame))
         {
             ShiftDown();
         }
-        // Shift to reverse with keyboard only (can be mapped similarly to gamepad if desired)
         else if (Input.GetKeyDown(KeyCode.R))
         {
             ShiftToReverse();
         }
-        // Shift to neutral with keyboard only (can be mapped similarly to gamepad if desired)
         else if (Input.GetKeyDown(KeyCode.N))
         {
             ShiftToNeutral();
@@ -131,7 +123,7 @@ public class CarController : MonoBehaviour
 
     private void ShiftToReverse()
     {
-        if (currentSpeed < 1f) // Only allow shifting to reverse when nearly stopped
+        if (currentSpeed < 1f) 
         {
             gear = -1;
             Debug.Log("Shifted to reverse");
@@ -192,11 +184,10 @@ public class CarController : MonoBehaviour
 
         float gearMultiplier = (currentDrivingMode == DrivingMode.Automatic) ? (float)gear / 5f : 1f;
 
-        // Dynamically increase motor force at low speeds in automatic mode
         float dynamicMotorForce = motorForce;
-        if (currentDrivingMode == DrivingMode.Automatic && rb.velocity.magnitude * 3.6f < 10f) // Speed is under 10 km/h
+        if (currentDrivingMode == DrivingMode.Automatic && rb.velocity.magnitude * 3.6f < 10f) 
         {
-            dynamicMotorForce = motorForce * 2f; // Increase motor force by 50% at low speeds
+            dynamicMotorForce = motorForce * 2f; 
         }
 
         if (gear != 0)
@@ -219,11 +210,10 @@ public class CarController : MonoBehaviour
 
     private void HandleSteering()
     {
-        // Steering with both keyboard and gamepad
         currentSteerAngle = maxSteerAngle * Input.GetAxis("Horizontal");
         if (gamepad != null)
         {
-            currentSteerAngle = maxSteerAngle * gamepad.leftStick.x.ReadValue(); // Use left stick for steering
+            currentSteerAngle = maxSteerAngle * gamepad.leftStick.x.ReadValue(); 
         }
 
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
