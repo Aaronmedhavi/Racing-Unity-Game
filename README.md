@@ -1,12 +1,6 @@
 ## About
 Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes pursuits.
 
-## Features
-- Engaging and smooth Driving
-- Beautiful scenery
-- Stunning visuals
-- Responsive controls and challenging tracks
-
 ## Installation
 
 ### Clone the Repository
@@ -30,3 +24,15 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 - Gear Up: E / R1 / RB
 - Gear Down: Q / L1 / LB
 - Change Driving Mode: M / D-pad Up
+
+## Features and Script
+- Engaging and smooth Driving
+- Beautiful scenery
+- Stunning visuals
+- Responsive controls and challenging tracks
+
+|  Script       | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| `CarController.cs` | Handles the car movement mechanics such as gear shift, driving mode, and gamepad controls. |
+| `UIManager.cs`  | Manages various UI elements such as timer, speed, driving mode, and gear change. |
+| `etc`  | |
