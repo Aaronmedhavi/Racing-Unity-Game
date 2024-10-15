@@ -35,4 +35,3 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 | ------------------- | ------------------------------------------------------------ |
 | `CarController.cs` | Handles the car movement mechanics such as gear shift, driving mode, and gamepad controls. |
 | `UIManager.cs`  | Manages various UI elements such as timer, speed, driving mode, and gear change. |
-| `etc`  | |
