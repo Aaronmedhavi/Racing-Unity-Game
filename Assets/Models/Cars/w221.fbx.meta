@@ -3,7 +3,322 @@ guid: 8fa04617b9f49ea42a4f0e17eac334d0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Scene_-_Root.002
+    second: {fileID: 2100000, guid: 64ff189c4bf27b94697946e344ae873c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: amdb11_brake.002
+    second: {fileID: 2100000, guid: e61ba18daf820494c9e65029a2468089, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: amdb11_caliper.002
+    second: {fileID: 2100000, guid: eaff37a6ba0123947a117dd9a89fd11c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: amdb11_misc.002
+    second: {fileID: 2100000, guid: 3910162ac3ec4d848b9e3ef170606332, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: amdb11_misc_chrome.002
+    second: {fileID: 2100000, guid: 2fc5f233ad0a46d4ab5da0935c79a87f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mirror
+    second: {fileID: 2100000, guid: cc4f7b2f886a0774c8ffdb747d5ad20e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221
+    second: {fileID: 2100000, guid: 45a3da8f07778744c977e03aac615554, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221.001
+    second: {fileID: 2100000, guid: 3814fc824848ee44595a8b2a6985a7a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_alcantara
+    second: {fileID: 2100000, guid: aca606bb1920ede4cade989c3577f8f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_alcantara1_b
+    second: {fileID: 2100000, guid: 4c3d4b7a0c8a69945a74db0d6d149867, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_alcantara2
+    second: {fileID: 2100000, guid: 18421f9059fc4b044939de020fbb3d8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_alcantara_b
+    second: {fileID: 2100000, guid: f4cbe470ce2bec14899e642b19a0d68a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_ambient_b
+    second: {fileID: 2100000, guid: c33412aa6306faf4b83ea44e62e7d660, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_b
+    second: {fileID: 2100000, guid: 7336f6c1edb9b9d4086f2cdf4f0bdbb6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_badges
+    second: {fileID: 2100000, guid: c30cc005c62ca9c4c875fc138fc0f12d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_belt
+    second: {fileID: 2100000, guid: 8bded64fcd80bdd4f99609e09becdfda, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_carpet
+    second: {fileID: 2100000, guid: 9aaa4d3a3ac054349953b5bec4f7e004, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_chmsl
+    second: {fileID: 2100000, guid: 9f90384c1fdf61b45bd840cc70c09718, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_dvd
+    second: {fileID: 2100000, guid: 2069d60db68ceaf48a2df655a87fcaf5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_dvd_b
+    second: {fileID: 2100000, guid: 951b26db6d6f5924085ee98f12ec9232, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_foglight_fl
+    second: {fileID: 2100000, guid: a5e210f0f2eee384fb2c3dd136e11acf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_glass
+    second: {fileID: 2100000, guid: cfb314cc213592e4da55f6e8e0932094, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_glass_tint
+    second: {fileID: 2100000, guid: 46f56819c9b13754ca742b59b3e1b8e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_grill
+    second: {fileID: 2100000, guid: 6efd573a27b31cb45887cf5b34442ee8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_grill4
+    second: {fileID: 2100000, guid: 14431d045684ce945b23119fa85d2a48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_harmankardon
+    second: {fileID: 2100000, guid: bf789a70c0687b042a987f51343f848c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_harmankardon1
+    second: {fileID: 2100000, guid: 465a5c455348fad409086d6c457e976d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_interior
+    second: {fileID: 2100000, guid: 988a6a309e867e04d9d6902ab6e02d02, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_interior_d
+    second: {fileID: 2100000, guid: ee0a3b1d63938b848aac6db33330e51a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_interior_emissive_lod0
+    second: {fileID: 2100000, guid: 98d0983da1126984998eb1db2ff058ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_interior_emissive_lod1
+    second: {fileID: 2100000, guid: b62fcd74a122d424da3829e53ce4801d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_interior_hl
+    second: {fileID: 2100000, guid: 92f40b09a39a5c144b157f43d76ad526, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_interior_lod0
+    second: {fileID: 2100000, guid: 2756fc480205b7546bf06cabe6e1b832, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_interior_lod0_b
+    second: {fileID: 2100000, guid: 186240567a4f9754692c68b2a883b7dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_leather1
+    second: {fileID: 2100000, guid: a59cabaa77e08c9469c94431009ab332, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_leather2
+    second: {fileID: 2100000, guid: a3db543e104180a4687cb7e73d8699e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_leather3
+    second: {fileID: 2100000, guid: eb162f4c57bc1ef45984ab7eb190eca5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_lights_lod0
+    second: {fileID: 2100000, guid: 26f3960b6473f5b49a4d47db9697551a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_lights_lod0_2
+    second: {fileID: 2100000, guid: 676d95ca4044383478571aae0308d987, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_lights_lod0_trans
+    second: {fileID: 2100000, guid: 3109d1d0d3ccd4c44a5bca2e63b21acb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_lowbeam_fl
+    second: {fileID: 2100000, guid: 0faba6eb6b85ba04194a2513851bf9be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_main
+    second: {fileID: 2100000, guid: f06bc165cca53ef43a550f20ee13afe0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_metal
+    second: {fileID: 2100000, guid: e7878eab15ba7b64aa83d5d47c63e193, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_nodamage_lod0
+    second: {fileID: 2100000, guid: 756749d4d66e5a84ab0953badb2d3d9e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_nodamage_lod0_amg
+    second: {fileID: 2100000, guid: 4d60475be05afb44d8f9be031253f8f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_paint
+    second: {fileID: 2100000, guid: b61442931f578cd46a99cee67a544184, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_perforated
+    second: {fileID: 2100000, guid: a541edb1a151cb84b8dbfb2c2214e879, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_priborka
+    second: {fileID: 2100000, guid: 5dcecec0129fb53449e737b7fb5c520f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_redglass
+    second: {fileID: 2100000, guid: 73381be06c34d7442bbe6ff08194a963, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_reverselight_fl
+    second: {fileID: 2100000, guid: 8f275ef991ff80b44876242e73b5c513, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_runninglight_fl
+    second: {fileID: 2100000, guid: e7224b0d222b3f04abd8b9720417a085, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_screen
+    second: {fileID: 2100000, guid: 8c650337b548e5c4c940bae121f65ff1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_screen_b
+    second: {fileID: 2100000, guid: 1fe28f25bf1e1bb4583a9d0fd552e0e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_signal_LR_fl
+    second: {fileID: 2100000, guid: 3bafa67dc48c55644a0f84c865317c5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_signal_L_fl
+    second: {fileID: 2100000, guid: 319d65743408ef64bb377ca617320eb7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_signal_L_mirror_fl
+    second: {fileID: 2100000, guid: 830f7f010d160534ab8d47a797ac2384, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_signal_R_fl
+    second: {fileID: 2100000, guid: 0f3a79ece4875ce4599caed34aa56a18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_signal_R_mirror_fl
+    second: {fileID: 2100000, guid: f200dc150c14023468b6c84807f9de03, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_stitching1
+    second: {fileID: 2100000, guid: a34b1b50052f2684cac12bd9fabf2e17, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_tinted_glass
+    second: {fileID: 2100000, guid: dafa5d5b8107fe9469c8082fa496d057, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_wheel_05a
+    second: {fileID: 2100000, guid: d28f70439f9cdd64f93892e3b2f28db0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_wheel_05a_b
+    second: {fileID: 2100000, guid: 3ec49a8099ad7c24dad65d6c3e3d6a50, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sw221_wood
+    second: {fileID: 2100000, guid: 70effacd70a481f4aa1976e846db0f12, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

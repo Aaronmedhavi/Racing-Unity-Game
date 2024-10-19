@@ -78,6 +78,6 @@ public class UIManager : MonoBehaviour
     private void UpdateMode()
     {
         string mode = carController.currentDrivingMode == CarController.DrivingMode.Manual ? "Manual" : "Automatic";
-        modeText.text = "Mode: " + mode;
+        modeText.text = mode;
     }
 }
