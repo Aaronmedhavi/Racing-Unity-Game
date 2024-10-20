@@ -5,17 +5,17 @@ using UnityEngine;
 public class AICarController : MonoBehaviour
 {
     [Header("Waypoints")]
-    public Transform[] waypoints;
-    private int currentWaypointIndex = 0;
+    private Transform[] waypoints;
+    public int currentWaypointIndex = 0;
 
     [Header("Car Settings")]
     public float maxMotorTorque = 1500f;
+    public float maxBrakeTorque = 3000f;
     public float maxSteeringAngle = 30f;
-    public float maxSpeed = 100f; // Adjust based on your game's scale
-
-    [Header("Sensors")]
-    public float sensorLength = 5f;
-    public LayerMask obstacleLayerMask;
+    public float brakeSensitivity = 50f;
+    public int lookAheadIndex = 1;
+    public float maxSpeed = 100f; 
+    public float waypointThreshold = 5f;
 
     private Rigidbody rb;
 
@@ -39,65 +39,56 @@ public class AICarController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Sensors();
         ApplySteering();
         Drive();
         UpdateWheelPoses();
         CheckWaypointDistance();
-    }
-
-    void Sensors()
-    {
-        RaycastHit hit;
-        Vector3 sensorStartPos = transform.position;
-        sensorStartPos += transform.forward * 1f;
-        bool obstacleDetected = false;
-
-        // Front sensor
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength, obstacleLayerMask))
-        {
-            Debug.DrawLine(sensorStartPos, hit.point, Color.red);
-            obstacleDetected = true;
-        }
-
-        // If obstacle detected, adjust steering
-        if (obstacleDetected)
-        {
-            frontLeftWheelCollider.steerAngle = maxSteeringAngle;
-            frontRightWheelCollider.steerAngle = maxSteeringAngle;
-        }
+        UpdateCurrentWaypoint();
     }
 
     void ApplySteering()
     {
         Vector3 relativeVector = transform.InverseTransformPoint(waypoints[currentWaypointIndex].position);
         float steeringInput = (relativeVector.x / relativeVector.magnitude) * maxSteeringAngle;
+        steeringInput = Mathf.Clamp(steeringInput, -maxSteeringAngle, maxSteeringAngle);
         frontLeftWheelCollider.steerAngle = steeringInput;
         frontRightWheelCollider.steerAngle = steeringInput;
     }
 
     void Drive()
     {
-        float speed = rb.velocity.magnitude * 3.6f; // Convert to km/h
+        float speed = rb.velocity.magnitude * 3.6f;
 
-        // Calculate the angle to the next waypoint
-        Vector3 relativeVector = transform.InverseTransformPoint(waypoints[currentWaypointIndex].position);
-        float steeringInput = (relativeVector.x / relativeVector.magnitude) * maxSteeringAngle;
+        int lookAheadWaypointIndex = (currentWaypointIndex + lookAheadIndex) % waypoints.Length;
+        Vector3 lookAheadVector = transform.InverseTransformPoint(waypoints[lookAheadWaypointIndex].position);
+        float lookAheadSteeringAngle = Mathf.Atan2(lookAheadVector.x, lookAheadVector.z) * Mathf.Rad2Deg;
+        float desiredSpeed = Mathf.Clamp(maxSpeed - (Mathf.Abs(lookAheadSteeringAngle) * 2f), 30f, maxSpeed); float speedDifference = speed - desiredSpeed;
+        float brake = Mathf.Clamp(speedDifference * brakeSensitivity, 0f, maxBrakeTorque);
 
-        // Adjust speed based on steering angle
-        float speedFactor = Mathf.Clamp(1 - (Mathf.Abs(steeringInput) / maxSteeringAngle), 0.5f, 1f);
-        float adjustedMaxSpeed = maxSpeed * speedFactor;
+        float motor = 0f;
+        float tractionControl = Mathf.Clamp01((maxSpeed - speed) / maxSpeed);
+        motor = maxMotorTorque * tractionControl;
 
-        if (speed < adjustedMaxSpeed)
+        if (speed < desiredSpeed)
         {
-            frontLeftWheelCollider.motorTorque = maxMotorTorque;
-            frontRightWheelCollider.motorTorque = maxMotorTorque;
+            motor = maxMotorTorque * tractionControl;
+            brake = 0f;
         }
         else
         {
-            frontLeftWheelCollider.motorTorque = 0f;
-            frontRightWheelCollider.motorTorque = 0f;
+            motor = 0f;
+            brake = Mathf.Clamp((speed - desiredSpeed) * brakeSensitivity, 0f, maxBrakeTorque);
         }
+
+        // Apply motor torque
+        frontLeftWheelCollider.motorTorque = motor;
+        frontRightWheelCollider.motorTorque = motor;
+
+        // Apply brake torque
+        frontLeftWheelCollider.brakeTorque = brake;
+        frontRightWheelCollider.brakeTorque = brake;
+        rearLeftWheelCollider.brakeTorque = brake;
+        rearRightWheelCollider.brakeTorque = brake;
     }
 
     void CheckWaypointDistance()
@@ -125,24 +116,14 @@ public class AICarController : MonoBehaviour
         wheelTransform.position = pos;
         wheelTransform.rotation = quat * Quaternion.Euler(rotationOffset);
     }
-    void OnDrawGizmos()
-    {
-        if (waypoints.Length > 0)
-        {
-            for (int i = 0; i < waypoints.Length; i++)
-            {
-                if (waypoints[i] != null)
-                {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawSphere(waypoints[i].position, 1f);
 
-                    if (i > 0)
-                    {
-                        Gizmos.DrawLine(waypoints[i - 1].position, waypoints[i].position);
-                    }
-                }
-            }
+    void UpdateCurrentWaypoint()
+    {
+        float distanceToWaypoint = Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position);
+
+        if (distanceToWaypoint < waypointThreshold)
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
         }
     }
-
 }

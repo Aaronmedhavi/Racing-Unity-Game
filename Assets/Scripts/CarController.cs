@@ -25,10 +25,17 @@ public class CarController : MonoBehaviour
 
     private Rigidbody rb;
     private bool isBraking = false;
+    public int currentWaypointIndex = 0;
+
+    [Header("Waypoints")]
+    public Transform[] waypoints;
+
+    [Header("Settings")]
+    public float waypointThreshold = 5f;// Distance to waypoint to consider it reached
 
     private int gear = 0;
     private float currentSpeed = 0f;
-    public float[] gearThresholds = { 10f, 25f, 40f, 60f, 80f }; // Speed for automatic gear changes
+    public float[] gearThresholds = { 10f, 25f, 40f, 60f, 80f };
 
     public enum DrivingMode { Manual, Automatic }
     public DrivingMode currentDrivingMode = DrivingMode.Manual;
@@ -38,6 +45,7 @@ public class CarController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        waypoints = WaypointManager.Instance.waypoints;
     }
 
     void Update()
@@ -45,6 +53,8 @@ public class CarController : MonoBehaviour
         gamepad = Gamepad.current;
 
         HandleInput();
+        UpdateCurrentWaypoint();
+
     }
 
     private void FixedUpdate()
@@ -178,6 +188,15 @@ public class CarController : MonoBehaviour
         Debug.Log("Switched to " + currentDrivingMode + " mode");
     }
 
+    void UpdateCurrentWaypoint()
+    {
+        float distanceToWaypoint = Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position);
+
+        if (distanceToWaypoint < waypointThreshold)
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+        }
+    }
     private void HandleMotor()
     {
         currentBrakeForce = isBraking ? brakeForce : 0f;

@@ -4,48 +4,51 @@ using UnityEngine;
 
 public class LapCount : MonoBehaviour
 {
-    public int totalLaps = 3;
-    private int currentLap = 0;
-    private bool hasStarted = false;
-    private bool isForward = true;
-    public GameObject playerCar;
-    private Vector3 lastCheckpointPosition;
+    public int currentLap = 0;
+    public int totalLaps = 3; 
+    public int checkpointIndex = 0; 
 
-    private void Start()
+    private bool raceFinished = false;
+
+    private Collider carCollider;
+
+    void Start()
     {
-        lastCheckpointPosition = transform.position;
+        carCollider = GetComponent<Collider>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("FinishLine"))
         {
-            Vector3 playerDirection = playerCar.transform.forward;
-            Vector3 checkpointDirection = transform.forward;
-            isForward = Vector3.Dot(playerDirection, checkpointDirection) > 0;
-            if (isForward)
+            if (IsCrossingFinishLineCorrectly())
             {
-                if (!hasStarted)
-                {
-                    hasStarted = true;
-                }
-                else
+                if (checkpointIndex == CheckpointManager.Instance.totalCheckpoints)
                 {
                     currentLap++;
-                    if (currentLap < totalLaps)
+                    checkpointIndex = 0;
+
+                    if (currentLap > totalLaps)
                     {
-                        Debug.Log("Lap " + currentLap + " Completed");
-                    }
-                    else if (currentLap == totalLaps)
-                    {
-                        Debug.Log("Race Finished");
+                        raceFinished = true;
+                        RaceManager.Instance.CarFinishedRace(this.gameObject);
                     }
                 }
             }
-            else
+        }
+        else if (other.CompareTag("Checkpoint"))
+        {
+            int checkpointNumber = other.GetComponent<Checkpoint>().checkpointNumber;
+            if (checkpointNumber == checkpointIndex)
             {
-                Debug.Log("Wrong Way");
+                checkpointIndex++;
             }
         }
+    }
+
+    private bool IsCrossingFinishLineCorrectly()
+    {
+        float dotProduct = Vector3.Dot(transform.forward, Vector3.forward);
+        return dotProduct < 0;
     }
 }

@@ -2373,9 +2373,10 @@ GameObject:
   - component: {fileID: 624615753206886138}
   - component: {fileID: 4467834219687508919}
   - component: {fileID: 5408923023408204019}
+  - component: {fileID: 4597037846320494884}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Player
+  m_TagString: Racer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2573,6 +2574,7 @@ MonoBehaviour:
   motorForce: 1500
   maxSteerAngle: 15
   brakeForce: 3000
+  currentWaypointIndex: 0
   gearThresholds:
   - 10
   - 25
@@ -2580,6 +2582,21 @@ MonoBehaviour:
   - 60
   - 80
   currentDrivingMode: 0
+--- !u!114 &4597037846320494884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926707081670613449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ea3d10778eb51439401eb7e1aaded6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLap: 1
+  totalLaps: 3
+  checkpointIndex: 0
 --- !u!1 &1951770404956829330
 GameObject:
   m_ObjectHideFlags: 0
