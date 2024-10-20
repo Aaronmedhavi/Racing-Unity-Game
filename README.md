@@ -26,6 +26,15 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 - Change Driving Mode: M / D-pad Up
 
 ## 📺 Gameplay Footage / Screenshot
+  <tr>
+    <td><img src="https://github.com/Aaronmedhavi/ProjectClips/blob/main/Balap.gif?raw=true" width="500"></td>
+  </tr>
+<table>
+  <tr>
+    <td><img src="https://github.com/Aaronmedhavi/ProjectClips/blob/main/Screenshot 2024-10-20 232442.png?raw=true" width="400"></td>
+    <td><img src="https://github.com/Aaronmedhavi/ProjectClips/blob/main/Screenshot 2024-10-20 232542.png" width="400"></td>
+  </tr>
+</table>
 
 ## ⚙️ Mechanics
 <h3>Netcode For GameObjects</h3>
@@ -35,9 +44,9 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 <p align="justify">Implementation of basic post processing which includes bloom and color grading to increase visual fidelity and enhance the player experience without sacrificing any performance.</p>
 
 ## 📚 Features and Script
-- Engaging and smooth Driving
-- Beautiful scenery
-- Stunning visuals
+- Engaging and Smooth Driving
+- Beautiful Scenery
+- Stunning Visuals
 - Responsive controls and challenging tracks
 
 |  Script       | Description                                                  |
