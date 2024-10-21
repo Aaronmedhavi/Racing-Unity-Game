@@ -37,11 +37,14 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 </table>
 
 ## ⚙️ Mechanics
-<h3>Netcode For GameObjects</h3>
-<p align="justify">Experience online multiplayer experience made possible with Netcode. Through the use of a network manager, it allows players to join the game as a host or a client in a menu. The game will start when there is 2 players in the game, the ball will spawn once all the players have joined. The built in network manager only provide one slot for the player prefab but with the use of an index based on the client ID, it's now possible for players to play with distinct sprites.</p>
 
-<h3>Post Processing</h3>
-<p align="justify">Implementation of basic post processing which includes bloom and color grading to increase visual fidelity and enhance the player experience without sacrificing any performance.</p>
+### Gamepad Input
+Experience online multiplayer experience made possible with Netcode. Through the use of a network manager, it allows players to join the game as a host or a client in a menu. The game will start when there is 2 players in the game, the ball will spawn once all the players have joined. The built in network manager only provide one slot for the player prefab but with the use of an index based on the client ID, it's now possible for players to play with distinct sprites.
+
+### AI Racer Opponent
+Implementation of basic post processing which includes bloom and color grading to increase visual fidelity and enhance the player experience without sacrificing any performance.
+
+### Optimization
 
 ## 📚 Features and Script
 - Engaging and Smooth Driving
@@ -53,4 +56,5 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 | ------------------- | ------------------------------------------------------------ |
 | `CarController.cs` | Handles the car movement mechanics such as gear shift, driving mode, and gamepad controls. |
 | `UIManager.cs`  | Manages various UI elements such as timer, speed, driving mode, and gear change. |
-| `LapCount.cs`  | Lap counter for when everytime the car pass through the finish line. |
+| `AICarController.cs`  | Handles the opponent car movement mechanics and their path using waypoints. |
+| `WaypointManager.cs`  | Assign and manages all waypoints on the track for the opponent car. |
