@@ -1,14 +1,7 @@
 ## 🚗 About
 Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes races.
 
-## 🕹️ Installation
-1. Download the game here:
-   ```
-   https://aaronmedhavi.itch.io/velocity-pursuit
-   ```
-2. Extract the files from the zip folder.
-3. Find and click on Racing.exe
-4. Enjoy the game.
+## Project Info
 
 ## 🎮 Controls
 
@@ -56,6 +49,15 @@ The game is optimized using occlusion culling to ensure that the camera only ren
 | `AICarController.cs`  | Handles the opponent car movement mechanics and their path using waypoints. |
 | `WaypointManager.cs`  | Assign and manages all waypoints on the track for the opponent car. |
 | `etc`  | |
+
+## 🕹️ Installation
+1. Download the game here:
+   ```
+   https://aaronmedhavi.itch.io/velocity-pursuit
+   ```
+2. Extract the files from the zip folder.
+3. Find and click on Racing.exe
+4. Enjoy the game.
 
 ## 📫 Contact
 If you want to provide feedback or report bugs, feel free to reach out to me here:
