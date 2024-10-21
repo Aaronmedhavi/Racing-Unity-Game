@@ -55,3 +55,8 @@ The game is optimized using occlusion culling to ensure that the camera only ren
 | `UIManager.cs`  | Manages various UI elements such as timer, speed, driving mode, and gear change. |
 | `AICarController.cs`  | Handles the opponent car movement mechanics and their path using waypoints. |
 | `WaypointManager.cs`  | Assign and manages all waypoints on the track for the opponent car. |
+| `etc`  | |
+
+## 📫 Contact
+If you want to provide feedback or report bugs, feel free to reach out to me here:
+- Email: aaronmedhavi@gmail.com
