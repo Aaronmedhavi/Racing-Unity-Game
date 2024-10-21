@@ -2,17 +2,13 @@
 Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes pursuits.
 
 ## 🕹️ Installation
-
-### 📁 Clone the Repository
-
-1. Make sure you have Unity (version 2022.3.9f1 or later) installed on your machine.
-2. Clone this repository:
+1. Download the game here:
    ```
-   git clone https://github.com/Aaronmedhavi/Racing-Unity-Game.git
+   https://aaronmedhavi.itch.io/velocity-pursuit
    ```
-3. Open the project in Unity.
-4. Open the game scene located in the "Assets/Scenes" folder.
-5. Press the Play button in Unity Editor to start the game.
+2. Extract the files from the zip folder.
+3. Find and click on Racing.exe
+4. Enjoy the game.
 
 ## 🎮 Controls
 
@@ -39,12 +35,13 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 ## ⚙️ Mechanics
 
 ### Gamepad Input
-Experience online multiplayer experience made possible with Netcode. Through the use of a network manager, it allows players to join the game as a host or a client in a menu. The game will start when there is 2 players in the game, the ball will spawn once all the players have joined. The built in network manager only provide one slot for the player prefab but with the use of an index based on the client ID, it's now possible for players to play with distinct sprites.
+Experience different ways to play with the use of a gamepad integrated with unity input system. Control your braking and acceleration precisely and control your steering using joystick for better handling.
 
 ### AI Racer Opponent
-Implementation of basic post processing which includes bloom and color grading to increase visual fidelity and enhance the player experience without sacrificing any performance.
+Race against AI opponent in a challenging track, made possible with the use of waypoints throughout the track to guide the cars around the track and back. Waypoints also help determine the position of each car allowing for accurate positioning update for each cars in the track.
 
 ### Optimization
+The game is optimized using occlusion culling to ensure that the camera only renders what it can see and nothing else. This method ensures a smooth FPS throughout the experience with no noticeable frame drops.
 
 ## 📚 Features and Script
 - Engaging and Smooth Driving
