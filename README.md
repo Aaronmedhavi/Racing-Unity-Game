@@ -1,5 +1,5 @@
 ## 🚗 About
-Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes pursuits.
+Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes races.
 
 ## 🕹️ Installation
 1. Download the game here:
