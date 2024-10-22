@@ -4,8 +4,8 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 ## Project Info
 | **Role** | **Team Size** | **Development Time** |
 |----------|---------------|---------------------|
-| Game Programmer | 1 | 1 Month |
-| Game Designer | 1 | 1 Month |
+| Game Programmer | 2 | 1 Month |
+| Game Designer | 2 | 1 Month |
 
 | **Name** | **Role** |
 |----------|----------|
