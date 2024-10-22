@@ -2,6 +2,15 @@
 Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes races.
 
 ## Project Info
+| **Role** | **Team Size** | **Development Time** |
+|----------|---------------|---------------------|
+| Game Programmer | 1 | 1 Month |
+| Game Designer | 1 | 1 Month |
+
+| **Name** | **Role** |
+|----------|----------|
+| Aaron Medhavi Kusnandar | Game Programmer |
+| Vincent Tanujaya | Game Designer |
 
 ## 🎮 Controls
 
