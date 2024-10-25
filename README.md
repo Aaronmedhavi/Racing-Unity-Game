@@ -1,18 +1,16 @@
 ## 🚗 About
-Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes pursuits.
+Dive into Velocity Pursuit, where you race through dynamic tracks, challenge your limits in time trials, and engage in high-stakes races.
 
-## 🕹️ Installation
+## Project Info
+| **Role** | **Team Size** | **Development Time** |
+|----------|---------------|---------------------|
+| Game Programmer | 2 | 1 Month |
+| Game Designer | 2 | 1 Month |
 
-### 📁 Clone the Repository
-
-1. Make sure you have Unity (version 2022.3.9f1 or later) installed on your machine.
-2. Clone this repository:
-   ```
-   git clone https://github.com/Aaronmedhavi/Racing-Unity-Game.git
-   ```
-3. Open the project in Unity.
-4. Open the game scene located in the "Assets/Scenes" folder.
-5. Press the Play button in Unity Editor to start the game.
+| **Name** | **Role** |
+|----------|----------|
+| Aaron Medhavi Kusnandar | Game Programmer |
+| Vincent Tanujaya | Game Designer |
 
 ## 🎮 Controls
 
@@ -26,22 +24,50 @@ Dive into Velocity Pursuit, where you race through dynamic tracks, challenge you
 - Change Driving Mode: M / D-pad Up
 
 ## 📺 Gameplay Footage / Screenshot
+  <tr>
+    <td><img src="https://github.com/Aaronmedhavi/ProjectClips/blob/main/Balap.gif?raw=true" width="500"></td>
+  </tr>
+<table>
+  <tr>
+    <td><img src="https://github.com/Aaronmedhavi/ProjectClips/blob/main/Screenshot 2024-10-20 232442.png?raw=true" width="400"></td>
+    <td><img src="https://github.com/Aaronmedhavi/ProjectClips/blob/main/Screenshot 2024-10-20 232542.png" width="400"></td>
+  </tr>
+</table>
 
 ## ⚙️ Mechanics
-<h3>Netcode For GameObjects</h3>
-<p align="justify">Experience online multiplayer experience made possible with Netcode. Through the use of a network manager, it allows players to join the game as a host or a client in a menu. The game will start when there is 2 players in the game, the ball will spawn once all the players have joined. The built in network manager only provide one slot for the player prefab but with the use of an index based on the client ID, it's now possible for players to play with distinct sprites.</p>
 
-<h3>Post Processing</h3>
-<p align="justify">Implementation of basic post processing which includes bloom and color grading to increase visual fidelity and enhance the player experience without sacrificing any performance.</p>
+### Gamepad Input
+Experience different ways to play with the use of a gamepad integrated with unity input system. Control your braking and acceleration precisely and control your steering using joystick for better handling.
+
+### AI Racer Opponent
+Race against AI opponent in a challenging track, made possible with the use of waypoints throughout the track to guide the cars around the track and back. Waypoints also help determine the position of each car allowing for accurate positioning update for each cars in the track.
+
+### Optimization
+The game is optimized using occlusion culling to ensure that the camera only renders what it can see and nothing else. This method ensures a smooth FPS throughout the experience with no noticeable frame drops.
 
 ## 📚 Features and Script
-- Engaging and smooth Driving
-- Beautiful scenery
-- Stunning visuals
+- Engaging and Smooth Driving
+- Beautiful Scenery
+- Stunning Visuals
 - Responsive controls and challenging tracks
 
 |  Script       | Description                                                  |
 | ------------------- | ------------------------------------------------------------ |
 | `CarController.cs` | Handles the car movement mechanics such as gear shift, driving mode, and gamepad controls. |
 | `UIManager.cs`  | Manages various UI elements such as timer, speed, driving mode, and gear change. |
-| `LapCount.cs`  | Lap counter for when everytime the car pass through the finish line. |
+| `AICarController.cs`  | Handles the opponent car movement mechanics and their path using waypoints. |
+| `WaypointManager.cs`  | Assign and manages all waypoints on the track for the opponent car. |
+| `etc`  | |
+
+## 🕹️ Installation
+1. Download the game here:
+   ```
+   https://aaronmedhavi.itch.io/velocity-pursuit
+   ```
+2. Extract the files from the zip folder.
+3. Find and click on Racing.exe
+4. Enjoy the game.
+
+## 📫 Contact
+If you want to provide feedback or report bugs, feel free to reach out to me here:
+- Email: aaronmedhavi@gmail.com
