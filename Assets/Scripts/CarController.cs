@@ -148,7 +148,7 @@ public class CarController : MonoBehaviour
 
     private void HandleAutomaticInput()
     {
-        currentSpeed = rb.velocity.magnitude * 3.6f; // Convert to km/h
+        currentSpeed = rb.linearVelocity.magnitude * 3.6f; // Convert to km/h
 
         if (currentAcceleration > 0)
         {
@@ -204,7 +204,7 @@ public class CarController : MonoBehaviour
         float gearMultiplier = (currentDrivingMode == DrivingMode.Automatic) ? (float)gear / 5f : 1f;
 
         float dynamicMotorForce = motorForce;
-        if (currentDrivingMode == DrivingMode.Automatic && rb.velocity.magnitude * 3.6f < 10f) 
+        if (currentDrivingMode == DrivingMode.Automatic && rb.linearVelocity.magnitude * 3.6f < 10f) 
         {
             dynamicMotorForce = motorForce * 2f; 
         }

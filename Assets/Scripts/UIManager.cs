@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
 
     void UpdateSpeedometer()
     {
-        float speed = playerCarRigidbody.velocity.magnitude * 3.6f;
+        float speed = playerCarRigidbody.linearVelocity.magnitude * 3.6f;
         speed = Mathf.Clamp(speed, 0f, maxSpeed);
         speedText.text = speed.ToString("000");
         float needleAngle = Mathf.Lerp(minNeedleAngle, maxNeedleAngle, speed / maxSpeed);

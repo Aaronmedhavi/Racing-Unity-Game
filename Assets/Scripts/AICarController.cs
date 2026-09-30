@@ -57,7 +57,7 @@ public class AICarController : MonoBehaviour
 
     void Drive()
     {
-        float speed = rb.velocity.magnitude * 3.6f;
+        float speed = rb.linearVelocity.magnitude * 3.6f;
 
         int lookAheadWaypointIndex = (currentWaypointIndex + lookAheadIndex) % waypoints.Length;
         Vector3 lookAheadVector = transform.InverseTransformPoint(waypoints[lookAheadWaypointIndex].position);
